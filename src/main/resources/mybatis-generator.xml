@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+<!-- 运行命令 : mvn mybatis-generator:generate -e -->
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<!-- 添加MYSQL保留关键字 -->
+		<property name="beginningDelimiter" value="`"/>
+		<property name="endingDelimiter" value="`"/>
+
+		<!-- 添加 limit方法 -->
+		<!-- <plugin type="mapperGenerator.plugin.MybatisExamplePagingPlugin"></plugin> -->
+		
+		<!-- <commentGenerator type="mapperGenerator.plugin.MybatisCommentGenerator">
+			<property name="suppressAllComments" value="false" />
+		</commentGenerator> -->
+		
+		<!--数据库链接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+						connectionURL="jdbc:mysql://localhost:3306/springboot?tinyInt1isBit=true"
+						userId="root"
+						password="12345"/>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		
+		<!-- 生成模型的包名和位置-->
+		<javaModelGenerator targetPackage="cn.weibin.springboot.entity" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		
+		<!-- 生成映射文件的包名和位置 -->
+		<sqlMapGenerator targetPackage="cn.weibin.springboot.mapper" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		
+		<!-- 生成DAO的包名和位置 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="cn.weibin.springboot.mapper" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		
+		
+		<table tableName="role" domainObjectName="Role" enableCountByExample="true"
+			   enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="true" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<!-- <table tableName="auth" domainObjectName="Auth" enableCountByExample="true"
+			   enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="true" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table> -->
+		<table tableName="member" domainObjectName="Member" enableCountByExample="true"
+			   enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="true" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+	</context>
+</generatorConfiguration>

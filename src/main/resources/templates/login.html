@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登陆</title>
+	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<style>
+		.login-box {
+			width: 100%;
+			height: 400px; 
+			text-align: center; 
+			margin-top: 200px;
+		}
+		.login-box>div {
+			padding : 4px;
+		}
+	</style>
+</head>
+<body>
+	<div class="login-box">
+		<div>用户名：<input type="text" id="user_name" th:value="${userName}"></div>
+		<div>密码：<input type="text" id="password"></div>
+		<div><button type="button">登陆</button></div>
+	</div>
+</body>
+</html>
