@@ -6,8 +6,11 @@ import java.util.Map;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import cn.weibin.springboot.mapper.MemberMapper;
 
 /**
  * 描述：
@@ -18,6 +21,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShiroConfig {
 
+	@Autowired
+	private MemberMapper memberMapper;
+
 	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -26,8 +32,8 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		// <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-		filterChainDefinitionMap.put("/webjars/**", "anon");
-		filterChainDefinitionMap.put("/login", "anon");
+		filterChainDefinitionMap.put("/js/**", "anon");
+		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/", "anon");
 		filterChainDefinitionMap.put("/front/**", "anon");
 		filterChainDefinitionMap.put("/api/**", "anon");
@@ -50,7 +56,6 @@ public class ShiroConfig {
 
 	@Bean
 	public CustomRealm customRealm() {
-		CustomRealm customRealm = new CustomRealm();
-		return customRealm;
+		return new CustomRealm(memberMapper);
 	}
 }

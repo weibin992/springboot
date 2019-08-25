@@ -22,18 +22,38 @@ public class IndexController extends BaseController {
 
 	@Autowired
 	private MemberMapper memberMapper;
+
+	/**
+	 * 默认主页
+	 * @return
+	 */
+	@RequestMapping(value = "/")
+	public String defaultPage() {
+		return "redirect:/index";
+	}
 	
+	/**
+	 * 登陆页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public Object login(Model model) {
 		model.addAttribute("userName", "admin");
 		return "login";
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Object login(String userName, String password) {
+	public Object login(String username, String password) {
 		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		try {
             subject.login(token);
         } catch (UnknownAccountException uae) {
@@ -50,9 +70,8 @@ public class IndexController extends BaseController {
 		return success();
 	}
 
-	@ResponseBody
 	@RequestMapping("/index")
 	public Object index() {
-		return memberMapper.selectByPrimaryKey(1);
+		return "index";
 	}
 }

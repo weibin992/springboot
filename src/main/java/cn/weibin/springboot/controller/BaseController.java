@@ -10,24 +10,24 @@ public class BaseController {
 	protected static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 	
 	/**
-	 * 构造响应实体
-	 * @param data
-	 * @return
-	 */
-	protected ResponseBean buildResponse(Object data) {
-		ResponseBean response = new ResponseBean();
-		response.setCode(0);
-		response.setData(data);
-		return response;
-	}
-
-	/**
 	 * 成功响应
 	 * @return
 	 */
 	protected ResponseBean success() {
 		ResponseBean response = new ResponseBean();
 		response.setCode(0);
+		return response;
+	}
+
+	/**
+	 * 构造响应实体
+	 * @param data
+	 * @return
+	 */
+	protected ResponseBean success(Object data) {
+		ResponseBean response = new ResponseBean();
+		response.setCode(0);
+		response.setData(data);
 		return response;
 	}
 

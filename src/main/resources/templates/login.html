@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>用户登陆</title>
-	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
 	<style>
 		.login-box {
 			width: 100%;
@@ -15,12 +15,34 @@
 			padding : 4px;
 		}
 	</style>
+	<script>
+		$(function(){
+			$("#loginBtn").click(function(){
+				$.ajax({
+					url : '/login',
+					method : 'post',
+					data : {
+						username : $("#user_name").val(),
+						password: $("#password").val()
+					},
+					success : function(data) {
+						if(data.code == 0) {
+							alert("登陆成功");
+							location.href="index"
+						} else {
+							alert(data.message);
+						}
+					}
+				});
+			});
+		})
+	</script>
 </head>
 <body>
 	<div class="login-box">
 		<div>用户名：<input type="text" id="user_name" th:value="${userName}"></div>
 		<div>密码：<input type="text" id="password"></div>
-		<div><button type="button">登陆</button></div>
+		<div><button type="button" id="loginBtn">登陆</button></div>
 	</div>
 </body>
 </html>
