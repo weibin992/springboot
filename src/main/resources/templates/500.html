@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+	<script th:src="@{/js/jquery.min.js}"></script>
+</head>
+<body>
+	<div>
+		<span th:text="${message}">系统错误，请稍后重试，</span><a th:href="@{/home}">返回首页</a>
+	</div>
+</body>
+</html>

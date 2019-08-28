@@ -14,9 +14,12 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import cn.weibin.springboot.entity.Member;
-import cn.weibin.springboot.entity.MemberExample;
-import cn.weibin.springboot.mapper.MemberMapper;
+import cn.weibin.springboot.entity.User;
+import cn.weibin.springboot.entity.UserExample;
+import cn.weibin.springboot.mapper.PermissionMapper;
+import cn.weibin.springboot.mapper.RoleMapper;
+import cn.weibin.springboot.mapper.UserMapper;
+
 
 /**
  * 描述：
@@ -26,20 +29,27 @@ import cn.weibin.springboot.mapper.MemberMapper;
  */
 public class CustomRealm extends AuthorizingRealm {
 
-	private MemberMapper memberMapper;
+	private UserMapper userMapper;
 
-	public CustomRealm(MemberMapper memberMapper) {
+	private RoleMapper roleMapper;
+
+	private PermissionMapper permissionMapper;
+	
+	public CustomRealm(UserMapper userMapper, RoleMapper roleMapper, PermissionMapper permissionMapper) {
 		super();
-		this.memberMapper = memberMapper;
+		this.userMapper = userMapper;
+		this.roleMapper = roleMapper;
+		this.permissionMapper = permissionMapper;
 	}
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		User user = (User) SecurityUtils.getSubject().getPrincipal();
+		Set<String> roleCodes = new HashSet<>(roleMapper.selectCodeByUserId(user.getId()));
+		Set<String> permissions = new HashSet<>(permissionMapper.selectCodeByUserId(user.getId()));
+
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		Set<String> stringSet = new HashSet<>();
-		stringSet.add("user:show");
-		stringSet.add("user:admin");
-		info.setStringPermissions(stringSet);
+		info.setRoles(roleCodes);
+		info.setStringPermissions(permissions);
 		return info;
 	}
 
@@ -47,13 +57,13 @@ public class CustomRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
 			throws AuthenticationException {
 		String userName = (String) authenticationToken.getPrincipal();
-		MemberExample example = new MemberExample();
+		UserExample example = new UserExample();
 		example.createCriteria().andUserNameEqualTo(userName);
-		List<Member> memberList = memberMapper.selectByExample(example);
+		List<User> memberList = userMapper.selectByExample(example);
 		if(memberList.isEmpty()) {
 			return null;
 		}
-		Member member = memberList.get(0);
-		return new SimpleAuthenticationInfo(userName, member.getPassword(), getName());
+		User user = memberList.get(0);
+		return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
 	}
 }

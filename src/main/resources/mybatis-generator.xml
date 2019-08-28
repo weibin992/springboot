@@ -11,9 +11,9 @@
 		<!-- 添加 limit方法 -->
 		<!-- <plugin type="mapperGenerator.plugin.MybatisExamplePagingPlugin"></plugin> -->
 		
-		<!-- <commentGenerator type="mapperGenerator.plugin.MybatisCommentGenerator">
-			<property name="suppressAllComments" value="false" />
-		</commentGenerator> -->
+		<commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
 		
 		<!--数据库链接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -46,15 +46,19 @@
 			   enableSelectByExample="true" selectByExampleQueryId="false">
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
-		<!-- <table tableName="auth" domainObjectName="Auth" enableCountByExample="true"
-			   enableUpdateByExample="false" enableDeleteByExample="false"
-			   enableSelectByExample="true" selectByExampleQueryId="false">
-			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
-		</table> -->
-		<table tableName="member" domainObjectName="Member" enableCountByExample="true"
+		<table tableName="permission" domainObjectName="Permission" enableCountByExample="true"
 			   enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="true" selectByExampleQueryId="false">
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="user" domainObjectName="User" enableCountByExample="true"
+			   enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="true" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<!-- <table tableName="user_role" domainObjectName="UserRole" enableCountByExample="false"
+			   enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false">
+		</table> -->
 	</context>
 </generatorConfiguration>
